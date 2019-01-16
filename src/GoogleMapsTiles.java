@@ -1,3 +1,5 @@
 public interface GoogleMapsTiles {
-  int position(int x, int y);
+  boolean overlap(Rectangle other);
+  Rectangle intersect(Rectangle other);
+  Rectangle union(Rectangle other);
 }
