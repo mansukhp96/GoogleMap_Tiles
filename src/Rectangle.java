@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 public class Rectangle implements GoogleMapsTiles {
   private int x;
   private int y;
@@ -13,11 +15,14 @@ public class Rectangle implements GoogleMapsTiles {
    * @param h height of the rectangle
    */
 
-  public Rectangle(int x, int y, int w, int h) {
+  public Rectangle(int x, int y, int w, int h) throws IllegalArgumentException {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
+    if (w < 0 || h < 0) {
+      throw new IllegalArgumentException("Negative height or width not allowed");
+    }
   }
 
   @Override
@@ -32,21 +37,48 @@ public class Rectangle implements GoogleMapsTiles {
   }
 
   @Override
-  public Rectangle intersect(Rectangle other) { //return a rect. that is
-    if (overlap(other) == true){
+  public Rectangle intersect(Rectangle other) throws NoSuchElementException { //return a rect. that is
 
+    if (overlap(other) == true) {
+      int a = Math.max(x, other.x);
+      int b = Math.max(y, other.y);
+      int c = Math.min(x + w, other.x + other.w);
+      int d = Math.min(y + h, other.y + other.h);
+      int cw = Math.abs(c - a);
+      int dh = Math.abs(d - b);
+      Rectangle intRec = new Rectangle(a, b, cw, dh);
+      System.out.println(a + "/" + b + "/" + cw + "/" + dh);
+      return intRec;
+    } else if (overlap(other) == false) {
+      throw new NoSuchElementException("Rectangles don't intersect!");
     }
-    return other;
+    return null;
   }
 
   @Override
   public Rectangle union(Rectangle other) {
-    return other;
+    int a = Math.min(x, other.x);
+    int b = Math.min(y, other.y);
+    int c = Math.max(x + w, other.x + other.w);
+    int d = Math.max(y + h, other.y + other.h);
+    int cw = Math.abs(c - a);
+    int dh = Math.abs(d - b);
+    Rectangle uniRec = new Rectangle(a, b, cw, dh);
+    System.out.println(a + "/" + b + "/" + cw + "/" + dh);
+    return uniRec;
+  }
+
+  @Override
+  public String toString() {
+    String str = ("x:" + x + ", " + "y:" + y + ", " + "w:" + w + ", " + "h:" + h);
+    return str;
   }
 
 //  public static void main(String[] args) {
-//    Rectangle rec = new Rectangle(4, 1, 2, 2);
-//    Rectangle other = new Rectangle(1, 1, 4, 3);
+//    Rectangle rec = new Rectangle(6, 6, 3, 3);
+//    Rectangle other = new Rectangle(5, 5, 3, 3);
 //    System.out.println(rec.overlap(other));
+//    System.out.println(rec.intersect(other));
+//    System.out.println(rec.union(other));
 //  }
 }
