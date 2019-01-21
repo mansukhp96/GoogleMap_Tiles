@@ -9,6 +9,6 @@ public class RectangleTest {
   @Test
   public void testInit() {
     rec = new Rectangle(0, 0, 0, 0);
-    assertEquals("x:0, y:0, w:0, h:0", rec.toString());
+    assertEquals("f", rec.overlap(new Rectangle(1, 0, 0, 0)));
   }
 }
