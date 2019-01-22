@@ -20,36 +20,31 @@ public class Rectangle implements GoogleMapsTiles {
     this.y = y;
     this.w = w;
     this.h = h;
-    if (w < 0 || h < 0) {
-      throw new IllegalArgumentException("Negative height or width not allowed");
+    if (w <= 0 || h <= 0) {
+      throw new IllegalArgumentException(" height or width cannot be zero or negative");
     }
   }
 
   @Override
   public boolean overlap(Rectangle other) { //If rec and other are overlapping true/false
-    if ((x < (other.x + other.w)) &&
-            ((x + w) > other.x) &&
-            (y < (other.y + other.h)) &&
-            ((y + h) > other.y))
-      return true;
-    else
-      return false;
+    return ((x < (other.x + other.w))
+            && ((x + w) > other.x)
+            && (y < (other.y + other.h))
+            && ((y + h) > other.y));
   }
 
   @Override
-  public Rectangle intersect(Rectangle other) throws NoSuchElementException { //return a rect. that is
+  public Rectangle intersect(Rectangle other) throws NoSuchElementException {
+    //return a rect. that is the intersection of the two rectangles.
 
-    if (overlap(other) == true) {
+    if (overlap(other)) {
       int a = Math.max(x, other.x);
       int b = Math.max(y, other.y);
-      int c = Math.min(x + w, other.x + other.w);
-      int d = Math.min(y + h, other.y + other.h);
-      int cw = Math.abs(c - a);
-      int dh = Math.abs(d - b);
+      int cw = Math.abs(Math.min(x + w, other.x + other.w) - a);
+      int dh = Math.abs(Math.min(y + h, other.y + other.h) - b);
       Rectangle intRec = new Rectangle(a, b, cw, dh);
-      System.out.println(a + "/" + b + "/" + cw + "/" + dh);
       return intRec;
-    } else if (overlap(other) == false) {
+    } else if (!overlap(other)) {
       throw new NoSuchElementException("Rectangles don't intersect!");
     }
     return null;
@@ -59,12 +54,9 @@ public class Rectangle implements GoogleMapsTiles {
   public Rectangle union(Rectangle other) {
     int a = Math.min(x, other.x);
     int b = Math.min(y, other.y);
-    int c = Math.max(x + w, other.x + other.w);
-    int d = Math.max(y + h, other.y + other.h);
-    int cw = Math.abs(c - a);
-    int dh = Math.abs(d - b);
+    int cw = Math.abs(Math.max(x + w, other.x + other.w) - a);
+    int dh = Math.abs(Math.max(y + h, other.y + other.h) - b);
     Rectangle uniRec = new Rectangle(a, b, cw, dh);
-    System.out.println(a + "/" + b + "/" + cw + "/" + dh);
     return uniRec;
   }
 
@@ -74,11 +66,7 @@ public class Rectangle implements GoogleMapsTiles {
     return str;
   }
 
-//  public static void main(String[] args) {
-//    Rectangle rec = new Rectangle(6, 6, 3, 3);
-//    Rectangle other = new Rectangle(5, 5, 3, 3);
-//    System.out.println(rec.overlap(other));
-//    System.out.println(rec.intersect(other));
-//    System.out.println(rec.union(other));
-//  }
+  public Boolean equals(Rectangle other) {
+    return (x == other.x && y == other.y && w == other.w && h == other.h);
+  }
 }

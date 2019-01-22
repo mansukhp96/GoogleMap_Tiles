@@ -4,36 +4,30 @@
  */
 
 public interface GoogleMapsTiles {
-
   /**
+   * The method returns true or false, if the rectangles overlap each other or not. Touching
+   * rectangles are not a case of overlap.
+   *
    * @param other the other rectangle object.
    * @return true or false based on if the rectangles overlap.
    */
-
   boolean overlap(Rectangle other);
-
-  /**
-   * This method returns true if this rectangle overlaps with other, false otherwise. However
-   * touching rectangles are not considered as overlapping.
-   *
-   * @param other the other rectangle object.
-   * @return the new intersected rectangle object.
-   */
-
-  Rectangle intersect(Rectangle other);
 
   /**
    * Returns a new rectangle that is the intersection of the two rectangles.  If no intersection
    * exists, it throws a NoSuchElementException.
    *
    * @param other the other rectangle object.
+   * @return the new intersected rectangle object.
+   */
+  Rectangle intersect(Rectangle other);
+
+  /**
+   * The method returns the new rectangle object that is the smallest rectangle that contains both
+   * the rectangles provided as input. Union always exists.
+   *
+   * @param other the other rectangle object.
    * @return the new union rectangle object.
    */
-
   Rectangle union(Rectangle other);
-
-  /** This method returns a Rectangle object that represents the union of this rectangle and the
-   * other rectangle. The union is the smallest rectangle that contains both rectangles. Note that
-   * unlike the intersection, the union always exists.
-   */
 }
