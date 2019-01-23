@@ -1,11 +1,8 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class RectangleTest {
 
@@ -220,5 +217,18 @@ public class RectangleTest {
   public void testInsideRectUnion() {
     rec = new Rectangle(2, 2, 5, 5);
     assertEquals("x:2, y:2, w:5, h:5", rec.union(new Rectangle(3, 3, 1, 1)).toString());
+  }
+
+  @Test //check for equals method
+  public void testForEquals() {
+    rec = new Rectangle(1, 6, 2, 4);
+    assertEquals(true, rec.equals(new Rectangle(1, 6, 2, 4)));
+  }
+
+  @Test //check for hashcode
+  public void testHashCode() {
+    rec = new Rectangle(5, 7, 34, 6);
+    Rectangle rec2 = new Rectangle(5, 7, 34, 6);
+    assertEquals(true, rec.hashCode() == rec2.hashCode());
   }
 }

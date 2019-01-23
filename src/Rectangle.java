@@ -1,4 +1,5 @@
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class Rectangle implements GoogleMapsTiles {
   private int x;
@@ -66,7 +67,17 @@ public class Rectangle implements GoogleMapsTiles {
     return str;
   }
 
-  public Boolean equals(Rectangle other) {
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Rectangle)) {
+      return false;
+    }
+    Rectangle other = (Rectangle) obj;
     return (x == other.x && y == other.y && w == other.w && h == other.h);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(x, y, w, h);
   }
 }
