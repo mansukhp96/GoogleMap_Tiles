@@ -1,4 +1,4 @@
-# PDP_Google_Map_Tiles
+# GoogleMap_Tiles
 
 Introduction
 If you have used Google maps (or any other map application) you have seen how it draws the map using rectangular tiles. As you zoom or pan the map, it loads tiles interactively. It does so smartly so that it is not using the data connection more than it needs to.
